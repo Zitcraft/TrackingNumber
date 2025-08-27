@@ -32,8 +32,22 @@ def process_pdf():
     result = run_ocr(pdf_path)
     return jsonify({"tracking_number": result})
 
+def get_direct_gdrive_link(url):
+    """
+    Chuyển đổi URL Google Drive thành liên kết tải xuống trực tiếp
+    """
+    import re
+    match = re.search(r"/d/([\w-]+)", url)
+    if match:
+        file_id = match.group(1)
+        return f"https://drive.google.com/uc?export=download&id={file_id}"
+    return url
+
 def download_pdf(url):
-    # Tải file PDF từ Google Drive
+    # Chuyển URL Google Drive sang link tải xuống trực tiếp
+    url = get_direct_gdrive_link(url)
+    
+    # Tải file PDF từ URL
     response = requests.get(url, stream=True)
     if response.status_code == 200:
         temp_dir = tempfile.mkdtemp()
