@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 import pytesseract
 from pdf2image import convert_from_path
