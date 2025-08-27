@@ -5,11 +5,11 @@ import tempfile
 import shutil
 import uuid
 import requests
-import os
+import concurrent.futures
 
 app = Flask(__name__)
 
-# Cấu hình Tesseract và Poppler (sử dụng đường dẫn trên Linux)
+# Cấu hình Tesseract và Poppler
 pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"  # Đường dẫn tesseract trên Linux
 poppler_path = "/usr/bin"  # Đường dẫn poppler-utils trên Linux
 
@@ -49,8 +49,7 @@ def run_ocr(pdf_path):
     try:
         pages = convert_from_path(pdf_path, poppler_path=poppler_path)
         page = pages[0]
-        # Cắt và OCR từ vùng nhất định
-        crop_box = (180, 878, 580, 1028)
+        crop_box = (180, 878, 580, 1028)  # Cắt ảnh
         cropped = page.crop(crop_box)
         text = pytesseract.image_to_string(cropped, lang='eng')
         return text.strip()
