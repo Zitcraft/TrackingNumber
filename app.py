@@ -9,9 +9,9 @@ import os
 
 app = Flask(__name__)
 
-# Cấu hình Tesseract và Poppler
-pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"  # Cập nhật nếu cần
-poppler_path = r"D:\\#1 SCRIPT\\test EMB\\poppler-24.08.0\\Library\\bin"  # Cập nhật nếu cần
+# Cấu hình Tesseract và Poppler (sử dụng đường dẫn trên Linux)
+pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"  # Đường dẫn tesseract trên Linux
+poppler_path = "/usr/bin"  # Đường dẫn poppler-utils trên Linux
 
 # API nhận URL PDF và trả về kết quả OCR
 @app.route('/process_pdf', methods=['POST'])
